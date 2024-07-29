@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="768.0" prefWidth="1024.0" spacing="20.0" style="-fx-max-width: 1024; -fx-max-height: 768; -fx-pref-width: 1024; -fx-pref-height: 768;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jingcaisky.dictatewords.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <Pane prefHeight="540.0" prefWidth="984.0">
+      <children>
+         <Label layoutX="14.0" layoutY="22.0" text="听写数量" />
+         <ChoiceBox fx:id="slType" layoutX="108.0" layoutY="37.0" prefHeight="23.0" prefWidth="160.0" />
+         <Label layoutX="108.0" layoutY="22.0" text="类别" />
+         <Button fx:id="btGenerate" layoutX="284.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtGenerateClick" text="生成听写序列" />
+         <TableView fx:id="tbWords" layoutX="14.0" layoutY="83.0" prefHeight="433.0" prefWidth="913.0">
+           <columns>
+             <TableColumn prefWidth="75.0" text="C1" />
+             <TableColumn prefWidth="75.0" text="C2" />
+           </columns>
+         </TableView>
+         <Button id="btChinese" fx:id="btChinese" layoutX="674.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtChineseClick" text="汉语听写" />
+         <Button id="btEnglish" fx:id="btEnglish" layoutX="753.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtEnglishClick" text="英语听写" />
+         <Separator layoutX="389.0" layoutY="25.0" orientation="VERTICAL" prefHeight="50.0" prefWidth="1.0" />
+         <TextField fx:id="spCount" layoutX="14.0" layoutY="37.0" prefHeight="23.0" prefWidth="80.0" text="10" />
+         <TextField fx:id="spRepeat" layoutX="492.0" layoutY="37.0" prefHeight="23.0" prefWidth="80.0" text="2" />
+         <Label layoutX="492.0" layoutY="22.0" text="每词重复次数" />
+         <TextField fx:id="spSleep" layoutX="580.0" layoutY="37.0" prefHeight="23.0" prefWidth="80.0" text="2" />
+         <Label layoutX="580.0" layoutY="22.0" text="重复停顿(s)" />
+         <TextField fx:id="spWordSleep" layoutX="402.0" layoutY="38.0" prefHeight="23.0" prefWidth="80.0" text="3" />
+         <Label layoutX="405.0" layoutY="22.0" text="单词间停顿(s)" />
+      </children>
+   </Pane>
+
+    <Label fx:id="welcomeText">
+      <font>
+         <Font name="Microsoft YaHei" size="18.0" />
+      </font></Label>
+</VBox>
