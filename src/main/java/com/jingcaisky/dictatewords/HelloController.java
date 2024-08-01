@@ -67,6 +67,7 @@ public class HelloController implements Initializable {
         CommonService util = new CommonService();
         // 从数据库中查询指定数量的单词
         List<Words> list = util.selectWords(Integer.parseInt(countStr), typeStr);
+        Collections.shuffle(list);//乱序
         // 将查询到的单词添加到数据列表中
         for (Words word : list) {
             datas.add(word);
@@ -106,7 +107,7 @@ public class HelloController implements Initializable {
 //            System.out.println(word.getId() + " ++ " + word.getZh() + " ++ " + word.getEn() + " ++ " + word.getType());
             list.add(word);
         }
-        Collections.shuffle(list);//乱序
+
         SpeechService.textToSpeech("请准备好,即将开始按照汉语听写单词");
         CompletableFuture.runAsync(() -> {
             try {
@@ -145,7 +146,7 @@ public class HelloController implements Initializable {
 //            System.out.println(word.getId() + " ++ " + word.getZh() + " ++ " + word.getEn() + " ++ " + word.getType());
             list.add(word);
         }
-        Collections.shuffle(list);//乱序
+
         SpeechService.textToSpeech("Please get ready to start dictating words in English.");
         CompletableFuture.runAsync(() -> {
             try {
