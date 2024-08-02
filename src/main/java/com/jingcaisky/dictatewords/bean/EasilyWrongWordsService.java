@@ -12,7 +12,7 @@ public class EasilyWrongWordsService {
     private final String URL = "jdbc:sqlite:" + DB_FILE;
     private static String CLASS_NAME = "org.sqlite.JDBC";
     Connection conn ;
-    Statement statement;
+    PreparedStatement pstmt;
     ResultSet rs;
 
     /**
@@ -74,9 +74,9 @@ public class EasilyWrongWordsService {
             // 获取数据库连接
             conn = this.getConn();
             // 创建Statement对象，用于执行SQL查询语句
-            statement = conn.createStatement();
+            pstmt = conn.prepareStatement(sql);
             // 执行查询语句，获取结果集
-            rs = statement.executeQuery(sql);
+            rs = pstmt.executeQuery(sql);
             // 遍历结果集，为每一行数据创建一个Words对象，并将其添加到列表中
             while (rs.next()) {
                 Words words = new Words();
@@ -88,7 +88,7 @@ public class EasilyWrongWordsService {
             }
             // 关闭结果集和Statement对象
             rs.close();
-            statement.close();
+            pstmt.close();
         } catch (SQLException e) {
             // 如果发生SQL异常，将其包装为RuntimeException抛出
             throw new RuntimeException(e);
@@ -98,4 +98,41 @@ public class EasilyWrongWordsService {
         // 返回查询到的词汇列表
         return wordsList;
     }
+
+    /**
+     * 插入易错词
+     *
+     * @param words 要插入的易错词对象，包含中文、英文和词性
+     * @return 插入操作的结果，返回受影响的行数
+     * @throws RuntimeException 如果插入过程中发生SQL异常
+     */
+    public int insertEasilyWrongWords(Words words) {
+        // 定义SQL插入语句，用于向易错词表中插入新的易错词
+        String sql = "INSERT INTO EasilyWrongWords (zh, en, type) VALUES (?, ?, ?)";
+        int result = 0;
+        try {
+            // 获取数据库连接
+            conn = this.getConn();
+            // 准备执行SQL语句
+            pstmt = conn.prepareStatement(sql);
+            // 设置插入的中文词
+            pstmt.setString(1, words.getZh());
+            // 设置插入的英文词
+            pstmt.setString(2, words.getEn());
+            // 设置插入的词性
+            pstmt.setString(3, words.getType());
+            // 执行插入操作并获取结果
+            result = pstmt.executeUpdate();
+            // 关闭PreparedStatement对象
+            pstmt.close();
+        } catch (SQLException e) {
+            // 如果发生SQL异常，将其转换为运行时异常抛出
+            throw new RuntimeException(e);
+        }
+        // 关闭数据库连接
+        closeConn();
+        // 返回插入操作的结果
+        return result;
+    }
+
 }
