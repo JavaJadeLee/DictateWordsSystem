@@ -4,6 +4,7 @@ module com.jingcaisky.dictatewords {
     requires poi.ooxml;
     requires poi;
     requires jacob;
+    requires java.sql;
 
 
     opens com.jingcaisky.dictatewords to javafx.fxml;
