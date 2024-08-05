@@ -1,6 +1,7 @@
 package com.jingcaisky.dictatewords;
 
 import com.jingcaisky.dictatewords.bean.CommonService;
+import com.jingcaisky.dictatewords.bean.EasilyWrongWordsService;
 import com.jingcaisky.dictatewords.bean.SpeechService;
 import com.jingcaisky.dictatewords.domain.Words;
 import javafx.collections.FXCollections;
@@ -173,5 +174,31 @@ public class HelloController implements Initializable {
         ArrayList<String> types = util.selectTypes(wordsList);
         ObservableList<String> options = FXCollections.observableArrayList(types);
         slType.setItems(options);
+
+        tbWords.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                // 双击操作
+//                Person selectedPerson = tbWords.getSelectionModel().getSelectedItem();
+//                if (selectedPerson != null) {
+//                    showAlert("双击", "选中的人员：" + selectedPerson.getName());
+//                }
+                Words word = tbWords.getSelectionModel().getSelectedItem();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText("易错词");
+                alert.setContentText("是否确定将该单词存入‘易错词库’？");
+                Optional<ButtonType> buttonType = alert.showAndWait();
+                // 判断返回的按钮类型是确定还是取消，再据此分别进一步处理
+                if (buttonType.get().getButtonData().equals(ButtonBar.ButtonData.OK_DONE)) { // 单击了确定按钮OK_DONE
+                    EasilyWrongWordsService easilyWrongWordsService = new EasilyWrongWordsService();
+                    if (easilyWrongWordsService.setErrorWord(word) > 0) {
+                        System.out.println("操作成功");
+                    } else {
+                        System.out.println("插入失败");
+                    }
+                } else { // 单击了取消按钮CANCEL_CLOSE
+                    System.out.println("您选择了“取消”按钮。");
+                }
+            }
+        });
     }
 }

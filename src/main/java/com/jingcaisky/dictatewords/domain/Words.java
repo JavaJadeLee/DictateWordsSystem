@@ -5,6 +5,15 @@ public class Words {
     private String en;
     private String zh;
     private String type;
+    private int errorCount;
+
+    public int getErrorCount() {
+        return errorCount;
+    }
+
+    public void setErrorCount(int errorCount) {
+        this.errorCount = errorCount;
+    }
 
     public int getId() {
         return id;
