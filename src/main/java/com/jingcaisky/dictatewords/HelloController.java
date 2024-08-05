@@ -39,11 +39,6 @@ public class HelloController implements Initializable {
     @FXML
     private Label welcomeText;
 
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
-
     /**
      * 当生成按钮被点击时执行的操作。
      * 清空词语列表表格，根据用户输入的数量从数据库中查询新概念英语单词，并显示在表格中。
@@ -178,10 +173,6 @@ public class HelloController implements Initializable {
         tbWords.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 // 双击操作
-//                Person selectedPerson = tbWords.getSelectionModel().getSelectedItem();
-//                if (selectedPerson != null) {
-//                    showAlert("双击", "选中的人员：" + selectedPerson.getName());
-//                }
                 Words word = tbWords.getSelectionModel().getSelectedItem();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText("易错词");
