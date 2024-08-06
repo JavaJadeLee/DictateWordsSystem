@@ -167,9 +167,13 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CommonService util = new CommonService();
+        EasilyWrongWordsService easilyWrongWordsService = new EasilyWrongWordsService();
         List<Words> wordsList = util.selectAllWords();
+        List<Words> easilyWrongWordsList = easilyWrongWordsService.selectAllEasilyWrongWords();
+
         if (welcomeText != null){
-            welcomeText.setText(util.statisticalInformation(wordsList));
+            String text = "库内" + util.statisticalInformation(wordsList, easilyWrongWordsList);
+            welcomeText.setText(text);
         }
         ArrayList<String> types = util.selectTypes(wordsList);
         ObservableList<String> options = FXCollections.observableArrayList(types);
@@ -187,7 +191,6 @@ public class HelloController implements Initializable {
                     Optional<ButtonType> buttonType = alert.showAndWait();
                     // 判断返回的按钮类型是确定还是取消，再据此分别进一步处理
                     if (buttonType.get().getButtonData().equals(ButtonBar.ButtonData.OK_DONE)) { // 单击了确定按钮OK_DONE
-                        EasilyWrongWordsService easilyWrongWordsService = new EasilyWrongWordsService();
                         if (easilyWrongWordsService.setErrorWord(word) > 0) {
                             System.out.println("操作成功");
                         } else {

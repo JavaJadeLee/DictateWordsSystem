@@ -156,13 +156,14 @@ public class CommonService {
      * @param wordsList 单词列表，包含待统计的单词。
      * @return 包含单词总数的字符串信息。
      */
-    public String statisticalInformation(List<Words> wordsList) {
+    public String statisticalInformation(List<Words> wordsList, List<Words> wrongWordsList) {
         // 初始化结果字符串
         String result = "";
         // 计算单词列表中的单词总数
         int countAllWords = wordsList.size();
+        int countWrongWords = wrongWordsList.size();
         // 将单词总数添加到结果字符串中
-        result += "库内总单词数：" + countAllWords + "\n";
+        result += "总单词数：" + countAllWords + "，错词数：" + countWrongWords + "\n";
         // 返回包含单词总数的字符串
         return result;
     }
