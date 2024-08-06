@@ -16,6 +16,8 @@ target/
 *.xlsx
 *.xls
 *.db
+*.doc
+*.docx
 
 ### Eclipse ###
 .apt_generated
