@@ -100,7 +100,7 @@ public class EasilyWrongWordsService {
             // 创建Statement对象，用于执行SQL查询语句
             pstmt = conn.prepareStatement(sql);
             // 执行查询语句，获取结果集
-            rs = pstmt.executeQuery(sql);
+            rs = pstmt.executeQuery();
             // 遍历结果集，为每一行数据创建一个Words对象，并将其添加到列表中
             while (rs.next()) {
                 Words words = new Words();
@@ -108,6 +108,7 @@ public class EasilyWrongWordsService {
                 words.setZh(rs.getString("zh"));
                 words.setEn(rs.getString("en"));
                 words.setType(rs.getString("type"));
+                words.setErrorCount(rs.getInt("error_count"));
                 wordsList.add(words);
             }
             // 关闭结果集和Statement对象

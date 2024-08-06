@@ -170,4 +170,20 @@ public class CommonService {
     public ArrayList<String> selectTypes(List<Words> wordsList){
         return (ArrayList<String>) wordsList.stream().map(Words::getType).distinct().collect(Collectors.toList());
     }
+
+    /**
+     * 根据给定的类型列表筛选单词列表
+     *
+     * 该方法通过过滤给定的单词列表，仅返回与指定类型匹配的单词
+     * 它使用Java 8的流API来执行过滤操作，提供了一种更简洁和直观的方式来处理集合
+     *
+     * @param wordsList 单词列表，包含各种类型的单词
+     * @param types 类型列表，用于筛选单词只有这些类型中的单词会被包含在返回的列表中
+     * @return 返回一个列表，该列表包含与给定类型匹配的所有单词
+     */
+    public List<Words> filterWordsByType(List<Words> wordsList, ArrayList<String> types) {
+        return wordsList.stream()
+                .filter(words -> types.contains(words.getType()))
+                .collect(Collectors.toList());
+    }
 }

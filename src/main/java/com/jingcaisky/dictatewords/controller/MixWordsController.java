@@ -1,5 +1,6 @@
-package com.jingcaisky.dictatewords;
+package com.jingcaisky.dictatewords.controller;
 
+import com.jingcaisky.dictatewords.HelloApplication;
 import com.jingcaisky.dictatewords.bean.CommonService;
 import com.jingcaisky.dictatewords.bean.EasilyWrongWordsService;
 import com.jingcaisky.dictatewords.bean.SpeechService;
@@ -7,16 +8,21 @@ import com.jingcaisky.dictatewords.domain.Words;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-public class HelloController implements Initializable {
+public class MixWordsController implements Initializable {
 
     @FXML
     private TableView<Words> tbWords;
@@ -29,15 +35,38 @@ public class HelloController implements Initializable {
     @FXML
     private TextField spWordSleep;
     @FXML
-    private ChoiceBox<String> slType;
-    @FXML
-    private Button btChinese;
-    @FXML
-    private Button btEnglish;
-    @FXML
-    private Button btGenerate;
-    @FXML
-    private Label welcomeText;
+    private ListView lvUnit;
+
+
+
+    /**
+     * 显示自定义的Stage窗口
+     * 该方法用于加载一个外部的FXML文件，将其作为场景加载到一个模态对话框中，并显示该对话框
+     * 使用了JavaFX的FXMLLoader来加载界面文件，并设置了窗口的模态属性，确保用户必须关闭此窗口才能继续操作主窗口
+     * 窗口的标题被设置为"错词听写"，表达了该应用的主要功能
+     *
+     * @throws IOException 如果无法加载FXML文件或资源，则抛出此异常
+     */
+    public static void showStage() throws IOException {
+        // 创建一个新的Stage对象
+        Stage stage=new Stage();
+        // 初始化Stage的模态属性，使其成为应用程序模态对话框
+        stage.initModality(Modality.WINDOW_MODAL);
+        // 创建FXMLLoader对象，用于加载FXML文件
+        FXMLLoader fxmlLoader;
+        // 实例化FXMLLoader，指定加载的FXML文件路径
+        fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("mix-view.fxml"));
+        // 使用FXMLLoader加载场景，并设置场景的宽高
+        Scene scene = new Scene(fxmlLoader.load(), 960, 680);
+        // 设置Stage的标题
+        stage.setTitle("混合听写");
+        // 设置Stage的场景
+        stage.setScene(scene);
+        // 设置Stage的大小不可调节
+        stage.setResizable(false);
+        // 显示Stage并等待，直到它被关闭
+        stage.showAndWait();
+    }
 
     /**
      * 当生成按钮被点击时执行的操作。
@@ -50,22 +79,31 @@ public class HelloController implements Initializable {
         ObservableList<Words> datas = FXCollections.observableArrayList();
         // 获取用户输入的单词数量
         String countStr = spCount.getText();
-        String typeStr = slType.getValue();
-        if (countStr == null || typeStr == null) {
+        // 获取用户选择的章节
+        ObservableList<String> selectedIndices = lvUnit.getSelectionModel().getSelectedItems();
+        ArrayList<String> types = new ArrayList<>();
+        if (countStr == null || selectedIndices.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Dialog");
             alert.setHeaderText(null);
-            alert.setContentText("请填写单词数量并选择单词类型");
+            alert.setContentText("请填写单词数量并选择章节");
             alert.showAndWait();
             return;
         }
+        for(String o : selectedIndices){
+            types.add(o);
+        }
+
         // 创建CommonService实例，用于数据库操作
         CommonService util = new CommonService();
-        // 从数据库中查询指定数量的单词
-        List<Words> list = util.selectWords(Integer.parseInt(countStr), typeStr);
-        Collections.shuffle(list);//乱序
+        List<Words> allWords = util.selectAllWords();
+        List<Words> filteredWords = util.filterWordsByType(allWords, types);
+        Collections.shuffle(filteredWords);//乱序
+        if (filteredWords.size() > Integer.parseInt(countStr)){
+            filteredWords = filteredWords.subList(0, Integer.parseInt(countStr));
+        }
         // 将查询到的单词添加到数据列表中
-        for (Words word : list) {
+        for (Words word : filteredWords) {
             datas.add(word);
             tbWords.setItems(datas);
         }
@@ -74,15 +112,22 @@ public class HelloController implements Initializable {
         TableColumn en = new TableColumn("英语");
         TableColumn zh = new TableColumn("汉语");
         TableColumn type = new TableColumn("类别");
+
         // 设置各列的数据绑定，以显示对应属性的值
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         en.setCellValueFactory(new PropertyValueFactory<>("en"));
         zh.setCellValueFactory(new PropertyValueFactory<>("zh"));
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
+
         // 将所有列添加到表格中
         tbWords.getColumns().addAll(id, en, zh, type);
+
+
     }
 
+    /**
+     * 汉语听写按钮被点击时执行的操作。
+     */
     public void onBtChineseClick() {
         System.out.println("onBtChineseClick");
         if (tbWords.getItems().size() == 0) {
@@ -122,6 +167,9 @@ public class HelloController implements Initializable {
 
     }
 
+    /**
+     * 英语听写按钮被点击时执行的操作。
+     */
     public void onBtEnglishClick() {
         System.out.println("onBtEnglishClick");
         if (tbWords.getItems().size() == 0) {
@@ -165,10 +213,10 @@ public class HelloController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CommonService util = new CommonService();
         List<Words> wordsList = util.selectAllWords();
-        welcomeText.setText(util.statisticalInformation(wordsList));
         ArrayList<String> types = util.selectTypes(wordsList);
         ObservableList<String> options = FXCollections.observableArrayList(types);
-        slType.setItems(options);
+        lvUnit.setItems(options);
+        lvUnit.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tbWords.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {

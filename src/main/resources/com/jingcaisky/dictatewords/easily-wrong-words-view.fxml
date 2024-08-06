@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="768.0" prefWidth="1024.0" spacing="20.0" style="-fx-max-width: 1024; -fx-max-height: 768; -fx-pref-width: 1024; -fx-pref-height: 768;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jingcaisky.dictatewords.HelloController">
+<VBox alignment="CENTER" prefHeight="768.0" prefWidth="1024.0" spacing="20.0" style="-fx-max-width: 1024; -fx-max-height: 768; -fx-pref-width: 1024; -fx-pref-height: 768;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jingcaisky.dictatewords.controller.EasilyWrongWordsController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -24,8 +24,8 @@
          <Button fx:id="btGenerate" layoutX="284.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtGenerateClick" text="生成听写序列" />
          <TableView fx:id="tbWords" layoutX="14.0" layoutY="83.0" prefHeight="433.0" prefWidth="913.0">
            <columns>
-             <TableColumn prefWidth="75.0" text="C1" />
-             <TableColumn prefWidth="75.0" text="C2" />
+             <TableColumn prefWidth="100.0" text="C1" />
+             <TableColumn prefWidth="100.0" text="C2" />
            </columns>
          </TableView>
          <Button id="btChinese" fx:id="btChinese" layoutX="674.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtChineseClick" text="汉语听写" />
@@ -38,17 +38,12 @@
          <Label layoutX="580.0" layoutY="22.0" text="重复停顿(s)" />
          <TextField fx:id="spWordSleep" layoutX="402.0" layoutY="38.0" prefHeight="23.0" prefWidth="80.0" text="3" />
          <Label layoutX="405.0" layoutY="22.0" text="单词间停顿(s)" />
-         <RadioButton fx:id="rdRandom" layoutX="108.0" layoutY="41.0" mnemonicParsing="false" selected="true" text="随机错词">
+         <RadioButton fx:id="rdRandom" layoutX="108.0" layoutY="41.0" mnemonicParsing="false" selected="true" text="随机错词" userData="radomWrongWords">
             <toggleGroup>
-               <ToggleGroup fx:id="type" />
+               <ToggleGroup fx:id="tgType" />
             </toggleGroup>
          </RadioButton>
-         <RadioButton fx:id="rdHigh" layoutX="184.0" layoutY="41.0" mnemonicParsing="false" text="高频错词" toggleGroup="$type" />
+         <RadioButton fx:id="rdHigh" layoutX="184.0" layoutY="41.0" mnemonicParsing="false" text="高频错词" toggleGroup="$tgType" userData="highWrongWords" />
       </children>
    </Pane>
-
-    <Label fx:id="welcomeText">
-      <font>
-         <Font name="Microsoft YaHei" size="18.0" />
-      </font></Label>
 </VBox>

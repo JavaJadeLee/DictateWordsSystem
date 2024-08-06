@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="768.0" prefWidth="1024.0" spacing="20.0" style="-fx-max-width: 1024; -fx-max-height: 768; -fx-pref-width: 1024; -fx-pref-height: 768;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jingcaisky.dictatewords.HelloController">
+<VBox alignment="CENTER" prefHeight="768.0" prefWidth="1024.0" spacing="20.0" style="-fx-max-width: 1024; -fx-max-height: 768; -fx-pref-width: 1024; -fx-pref-height: 768;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jingcaisky.dictatewords.controller.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -23,12 +23,12 @@
      <menus>
        <Menu mnemonicParsing="false" text="混合听写">
          <items>
-           <MenuItem mnemonicParsing="false" text="混合听写" />
+           <MenuItem mnemonicParsing="false" text="混合听写" fx:id="mnMix" onAction="#onMixClick"/>
          </items>
        </Menu>
        <Menu mnemonicParsing="false" text="易错词库">
          <items>
-           <MenuItem mnemonicParsing="false" text="易错词听写" />
+           <MenuItem fx:id="mnEww" mnemonicParsing="false" onAction="#onEwwClick" text="易错词听写" />
          </items>
        </Menu>
        <Menu mnemonicParsing="false" text="Help">
@@ -66,5 +66,6 @@
     <Label fx:id="welcomeText">
       <font>
          <Font name="Microsoft YaHei" size="18.0" />
-      </font></Label>
+      </font>
+    </Label>
 </VBox>
