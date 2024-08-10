@@ -191,8 +191,9 @@ public class HelloController implements Initializable {
                     Optional<ButtonType> buttonType = alert.showAndWait();
                     // 判断返回的按钮类型是确定还是取消，再据此分别进一步处理
                     if (buttonType.get().getButtonData().equals(ButtonBar.ButtonData.OK_DONE)) { // 单击了确定按钮OK_DONE
-                        if (easilyWrongWordsService.setErrorWord(word) > 0) {
-                            System.out.println("操作成功");
+                        EasilyWrongWordsService ewws = new EasilyWrongWordsService();
+                        if (ewws.setErrorWord(word) > 0) {
+                            System.out.println("设置错词成功");
                         } else {
                             System.out.println("插入失败");
                         }

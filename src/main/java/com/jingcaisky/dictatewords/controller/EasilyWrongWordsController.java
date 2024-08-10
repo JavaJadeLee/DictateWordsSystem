@@ -222,7 +222,7 @@ public class EasilyWrongWordsController implements Initializable {
                 if (buttonType.get().getButtonData().equals(ButtonBar.ButtonData.OK_DONE)) { // 单击了确定按钮OK_DONE
                     EasilyWrongWordsService easilyWrongWordsService = new EasilyWrongWordsService();
                     if (easilyWrongWordsService.setErrorWord(word) > 0) {
-                        System.out.println("操作成功");
+                        System.out.println("设置错词成功");
                     } else {
                         System.out.println("插入失败");
                     }
