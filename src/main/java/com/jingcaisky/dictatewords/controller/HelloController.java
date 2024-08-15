@@ -34,6 +34,8 @@ public class HelloController implements Initializable {
     private ChoiceBox<String> slType;
     @FXML
     private Label welcomeText;
+    @FXML
+    private Label countText;
 
     public void onEwwClick() throws Exception {
         EasilyWrongWordsController.showStage();
@@ -84,6 +86,8 @@ public class HelloController implements Initializable {
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         // 将所有列添加到表格中
         tbWords.getColumns().addAll(id, en, zh, type);
+        int countAll = util.countWordsType(typeStr);
+        countText.setText("共" + countAll + "词符合，生成" + list.size() + "词");
     }
 
     public void onBtChineseClick() {

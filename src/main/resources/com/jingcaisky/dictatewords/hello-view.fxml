@@ -23,7 +23,7 @@
      <menus>
        <Menu mnemonicParsing="false" text="混合听写">
          <items>
-           <MenuItem mnemonicParsing="false" text="混合听写" fx:id="mnMix" onAction="#onMixClick"/>
+           <MenuItem fx:id="mnMix" mnemonicParsing="false" onAction="#onMixClick" text="混合听写" />
          </items>
        </Menu>
        <Menu mnemonicParsing="false" text="易错词库">
@@ -41,25 +41,26 @@
    <Pane prefHeight="540.0" prefWidth="984.0">
       <children>
          <Label layoutX="14.0" layoutY="22.0" text="听写数量" />
-         <ChoiceBox fx:id="slType" layoutX="108.0" layoutY="37.0" prefHeight="23.0" prefWidth="160.0" />
-         <Label layoutX="108.0" layoutY="22.0" text="类别" />
-         <Button fx:id="btGenerate" layoutX="284.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtGenerateClick" text="生成听写序列" />
+         <ChoiceBox fx:id="slType" layoutX="70.0" layoutY="37.0" prefHeight="23.0" prefWidth="160.0" />
+         <Label layoutX="70.0" layoutY="22.0" text="类别" />
+         <Button fx:id="btGenerate" layoutX="234.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtGenerateClick" prefHeight="23.0" prefWidth="94.0" text="生成听写序列" />
          <TableView fx:id="tbWords" layoutX="14.0" layoutY="83.0" prefHeight="433.0" prefWidth="913.0">
            <columns>
              <TableColumn prefWidth="75.0" text="C1" />
              <TableColumn prefWidth="75.0" text="C2" />
            </columns>
          </TableView>
-         <Button id="btChinese" fx:id="btChinese" layoutX="674.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtChineseClick" text="汉语听写" />
-         <Button id="btEnglish" fx:id="btEnglish" layoutX="753.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtEnglishClick" text="英语听写" />
-         <Separator layoutX="389.0" layoutY="25.0" orientation="VERTICAL" prefHeight="50.0" prefWidth="1.0" />
-         <TextField fx:id="spCount" layoutX="14.0" layoutY="37.0" prefHeight="23.0" prefWidth="80.0" text="20" />
-         <TextField fx:id="spRepeat" layoutX="492.0" layoutY="37.0" prefHeight="23.0" prefWidth="80.0" text="2" />
-         <Label layoutX="492.0" layoutY="22.0" text="每词重复次数" />
-         <TextField fx:id="spSleep" layoutX="580.0" layoutY="37.0" prefHeight="23.0" prefWidth="80.0" text="2" />
-         <Label layoutX="580.0" layoutY="22.0" text="重复停顿(s)" />
-         <TextField fx:id="spWordSleep" layoutX="402.0" layoutY="38.0" prefHeight="23.0" prefWidth="80.0" text="3" />
-         <Label layoutX="405.0" layoutY="22.0" text="单词间停顿(s)" />
+         <Button id="btChinese" fx:id="btChinese" layoutX="772.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtChineseClick" text="汉语听写" />
+         <Button id="btEnglish" fx:id="btEnglish" layoutX="845.0" layoutY="37.0" mnemonicParsing="false" onAction="#onBtEnglishClick" text="英语听写" />
+         <Separator layoutX="493.0" layoutY="25.0" orientation="VERTICAL" prefHeight="50.0" prefWidth="1.0" />
+         <TextField fx:id="spCount" layoutX="14.0" layoutY="37.0" prefHeight="23.0" prefWidth="48.0" text="30" />
+         <TextField fx:id="spRepeat" layoutX="596.0" layoutY="37.0" prefHeight="23.0" prefWidth="80.0" text="2" />
+         <Label layoutX="596.0" layoutY="22.0" text="每词重复次数" />
+         <TextField fx:id="spSleep" layoutX="684.0" layoutY="37.0" prefHeight="23.0" prefWidth="80.0" text="2" />
+         <Label layoutX="684.0" layoutY="22.0" text="重复停顿(s)" />
+         <TextField fx:id="spWordSleep" layoutX="506.0" layoutY="38.0" prefHeight="23.0" prefWidth="80.0" text="2" />
+         <Label layoutX="509.0" layoutY="22.0" text="单词间停顿(s)" />
+         <Label fx:id="countText" layoutX="336.0" layoutY="41.0" text="共0词符合，生成0词" textFill="#8c8c8c" />
       </children>
    </Pane>
 

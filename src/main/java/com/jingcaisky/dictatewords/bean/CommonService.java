@@ -187,4 +187,20 @@ public class CommonService {
                 .filter(words -> types.contains(words.getType()))
                 .collect(Collectors.toList());
     }
+
+    /**
+     * 根据类型统计单词数量
+     *
+     * 该方法通过筛选所有单词中与给定类型匹配的单词，并计算其数量
+     * 它展示了如何使用流（Stream）API来过滤和收集数据
+     *
+     * @param type 单词类型，用于过滤单词
+     * @return 匹配给定类型的单词数量
+     */
+    public int countWordsType(String type){
+        // 从所有单词中筛选出指定类型的单词，并返回该类型单词的数量
+        return this.selectAllWords().stream()
+                .filter(words -> words.getType().equals(type))
+                .collect(Collectors.toList()).size();
+    }
 }
